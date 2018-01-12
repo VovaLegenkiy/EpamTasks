@@ -10,28 +10,48 @@ class Credit {
         this.creditPeriod = endDate.split(".")[1] - startDate.split(".")[1];
     }
 
+    toString() {
+        let month = this.creditPeriod <= 1 ? "month" : "months";
+        return `credit number: ${this.id}, 
+        client data:
+        first name: ${this.dataClient.firstName};
+        middle name: ${this.dataClient.middleName};
+        last name: ${this.dataClient.lastName}.
+        credit period: ${this.creditPeriod} ${month}.`
+    }
+
 }
 
 
-class StandartCredit extends Credit {
-    constructor(id,dataClient,startDate,endDate,monthPayment,fine){
-        super(id,dataClient,startDate,endDate);
+class CommonCredit extends Credit {
+    constructor(id, dataClient, startDate, endDate, monthPayment, fine) {
+        super(id, dataClient, startDate, endDate);
         this.paymant = monthPayment;
         this.fine = fine;
     }
-}
 
-
-class CreditLine extends Credit{
-    constructor(id,dataClient,startDate,endDate,dayPayment){
-        super(id,dataClient,startDate,endDate);
-        this.dayPaymnet = dayPayment;
+    toString() {
+        return `${super.toString()}
+        Payment per month: ${this.paymant},
+        fine per day: ${this.fine}`
     }
 }
 
 
-let credit = new Credit(1, {
+class CreditLine extends Credit {
+    constructor(id, dataClient, startDate, endDate, dayPayment) {
+        super(id, dataClient, startDate, endDate);
+        this.paymnet = dayPayment;
+    }
+    toString() {
+        return `${super.toString()}
+        Payment per day: ${this.paymnet},`
+    }
+}
+
+
+let commonCredit1 = new CommonCredit(1, {
     firstName: "Volodymyr",
     middleName: "Stas",
     lastName: "Lehenkyi"
-}, "07.10.2017", "07.12.2017");
+}, "01.01.2017", "01.04.2017", 100, 3);
