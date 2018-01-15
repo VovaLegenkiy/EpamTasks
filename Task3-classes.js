@@ -1,30 +1,44 @@
 /*Task description in README.md file*/
 class Credit {
     constructor(id, dataClient, startDate, endDate) {
-        this.paymnetsData = [];
-        this._id = id;
-        this._dataClient = {
+        this._paymnetsData = {};
+        this.id = id;
+        this.dataClient = {
             firstName: dataClient.firstName,
             middleName: dataClient.middleName,
             lastName: dataClient.lastName,
         };
         this.startDate = startDate;
         this.endDate = endDate;
-        this._creditPeriod = endDate.split(".")[1] - startDate.split(".")[1];
+        this.creditPeriod = endDate.split(".")[1] - startDate.split(".")[1];
+    }
+
+    getPaymentData() {
+        return this._paymnetsData;
     }
 
     makePayment(date, amount) {
-        this.paymnetsData.push([date, amount]);
+        let data = this.getPaymentData();
+        let dateMonth = +date.split(".")[1];
+        if (!data[dateMonth]) {
+            let tmpObj = {};
+            tmpObj[date] = amount;
+            data[dateMonth] = tmpObj;
+        } else {
+            let objMonth = data[dateMonth];
+            objMonth[date] = amount;
+        }
     }
 
+
     toString() {
-        let month = this._creditPeriod <= 1 ? "month" : "months";
-        return `credit number: ${this._id}, 
+        let month = this.creditPeriod <= 1 ? "month" : "months";
+        return `credit number: ${this.id}, 
         client data:
-        first name: ${this._dataClient.firstName};
-        middle name: ${this._dataClient.middleName};
-        last name: ${this._dataClient.lastName}.
-        credit period: ${this._dataClient} ${month}.`
+        first name: ${this.dataClient.firstName};
+        middle name: ${this.dataClient.middleName};
+        last name: ${this.dataClient.lastName}.
+        credit period: ${this.dataClient} ${month}.`
     }
 
 }
@@ -33,48 +47,57 @@ class Credit {
 class CommonCredit extends Credit {
     constructor(id, dataClient, startDate, endDate, monthPayment, fine) {
         super(id, dataClient, startDate, endDate);
-        this.paymant = monthPayment;
+        this.payment = monthPayment;
         this.fine = fine;
     }
 
-    _getFineAmount(date) {
+    _getPrewFine(month) {
+        let sum = 0;
+        let object = this.getPaymentData()[month - 1];
+        for (let date in object) {
+            let amount = +object[date];
+            sum += amount;
+        }
+        return 100 - sum;
+    }
+
+    _getMonthSum(obj) {
+        let sum = 0;
+        for (let date in obj) {
+            sum += +obj[date];
+        }
+        return sum;
+    }
+
+    _getLastMonthPayment(data, month) {
+        return this._getMonthSum(data[month]);
 
     }
 
-    getPaymentAmount(date) {
-        let self = this;
-        let dateError = new SyntaxError("Out of credit`s end date");
-        let splitDate = date.split(".");
-        let dateNow = new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
-        try {
-            let endDate = self.endDate.split(".");
-            endDate = new Date(endDate[2], endDate[1] - 1, endDate[0]);
-            if (dateNow < endDate) {
-                let sum = 0;
-                for (let i = 0; i < self.paymnetsData.length; i++) {
-                    let valueAmount = self.paymnetsData[i][1];
-                    let date = self.paymnetsData[i][0].split(".");
-                    date = new Date(date[2], date[1] - 1, date[0]);
-                    if (date < dateNow) {
-                        sum += (self.paymant - valueAmount);
-                    } else break;
-                }
-                return sum;
-            }
-            throw dateError;
-        }
-        catch (e){
-            if (e.name === "SyntaxError") {
-                alert(e);
-            } else {
-                throw e;
-            }
+    _getFineAmount(month) {
+        return this._getPrewFine(month);
+    }
+
+    _getPaymentsSum(month) {
+        let sum = this.payment;
+        let data = this.getPaymentData();
+
+        sum += this._getFineAmount(month);
+        sum -= this._getLastMonthPayment(data,month);
+        return sum;
+    }
+
+    getPaymentAmount(month) {
+        let endDate = this.endDate.split(".");
+        let endDateMonth = endDate[1];
+        if (month < endDateMonth) {
+            return this._getPaymentsSum(month)
         }
     }
 
     toString() {
         return `${super.toString()}
-        Payment per month: ${this.paymant},
+        Payment per month: ${this.payment},
         fine per day: ${this.fine}`
     }
 }
@@ -101,4 +124,4 @@ let commonCredit1 = new CommonCredit(1, {
 
 commonCredit1.makePayment("20.01.2017", "70");
 commonCredit1.makePayment("20.02.2017", "120");
-commonCredit1.getPaymentAmount("01.04.2017");
+commonCredit1.getPaymentAmount(2);
