@@ -1,7 +1,7 @@
 /*Task description in README.md file*/
 class Credit {
     constructor(id, dataClient, startDate, endDate) {
-        this._paymnetsData = {};
+        this._repaymnetsData = {};
         this.id = id;
         this.dataClient = {
             firstName: dataClient.firstName,
@@ -13,12 +13,10 @@ class Credit {
         this.creditPeriod = endDate.split(".")[1] - startDate.split(".")[1];
     }
 
-    getPaymentData() {
-        return this._paymnetsData;
+    _getPaymentData() {
+        return this._repaymnetsData;
     }
-
-    makePayment(date, amount) {
-        let data = this.getPaymentData();
+    _addPayment(data,date,amount){
         let dateMonth = +date.split(".")[1];
         if (!data[dateMonth]) {
             let tmpObj = {};
@@ -28,6 +26,11 @@ class Credit {
             let objMonth = data[dateMonth];
             objMonth[date] = amount;
         }
+        console.log(data);
+    }
+    makePayment(date, amount) {
+        let data = this._getPaymentData();
+        this._addPayment(data,date,amount)
     }
 
 
@@ -48,18 +51,9 @@ class CommonCredit extends Credit {
     constructor(id, dataClient, startDate, endDate, monthPayment, fine) {
         super(id, dataClient, startDate, endDate);
         this.payment = monthPayment;
-        this.fine = fine;
+        this.fine = this.payment * fine / 100;
     }
 
-    _getPrewFine(month) {
-        let sum = 0;
-        let object = this.getPaymentData()[month - 1];
-        for (let date in object) {
-            let amount = +object[date];
-            sum += amount;
-        }
-        return 100 - sum;
-    }
 
     _getMonthSum(obj) {
         let sum = 0;
@@ -74,26 +68,38 @@ class CommonCredit extends Credit {
 
     }
 
-    _getFineAmount(month) {
-        return this._getPrewFine(month);
+    _getPrewFine(month) {
+        let sum = 0;
+        let object = this._getPaymentData()[month - 1];
+        for (let date in object) {
+            let amount = +object[date];
+            sum += amount;
+        }
+        return this.payment - sum;
     }
 
-    _getPaymentsSum(month) {
-        let sum = this.payment;
-        let data = this.getPaymentData();
 
-        sum += this._getFineAmount(month);
-        sum -= this._getLastMonthPayment(data,month);
-        return sum;
+    _getFineAmount(month) {
+        let fine = this._getPrewFine(month);
+        let data = this._getPaymentData();
+        if (fine) {
+            let date = Object.keys(data[month]);
+            date = date[date.length - 1];
+            let day = +date.split(".")[0] - 1;
+            return +(day - 1) * this.fine;
+        }
+
     }
 
     getPaymentAmount(month) {
-        let endDate = this.endDate.split(".");
-        let endDateMonth = endDate[1];
-        if (month < endDateMonth) {
-            return this._getPaymentsSum(month)
-        }
+        let sum = this.payment;
+        let data = this._getPaymentData();
+        sum += this._getPrewFine(month);
+        sum -= this._getLastMonthPayment(data, month);
+        sum += this._getFineAmount(month);
+        return sum;
     }
+
 
     toString() {
         return `${super.toString()}
@@ -107,6 +113,17 @@ class CreditLine extends Credit {
     constructor(id, dataClient, startDate, endDate, dayPayment) {
         super(id, dataClient, startDate, endDate);
         this.paymnet = dayPayment;
+        this._usesHistory = {};
+    }
+    _getUsesHistory(){
+        return this._usesHistory;
+    }
+    getPaymentAmount(month){
+
+    }
+    useCredit(date,amount){
+        let data = this._getUsesHistory();
+        this._addPayment(data,date,amount);
     }
 
     toString() {
@@ -122,6 +139,21 @@ let commonCredit1 = new CommonCredit(1, {
     lastName: "Lehenkyi"
 }, "01.01.2017", "31.03.2017", 100, 3);
 
-commonCredit1.makePayment("20.01.2017", "70");
-commonCredit1.makePayment("20.02.2017", "120");
+commonCredit1.makePayment("20.01.2017", 70);
+commonCredit1.makePayment("20.02.2017", 100);
 commonCredit1.getPaymentAmount(2);
+
+let creditLine1 = new CreditLine(1,{
+    firstName: "Marina",
+    middleName: "Vikrot",
+    lastName: "Morokhovskaya"
+},"01.01.2017","31.03.2017",0.05);
+
+
+creditLine1.useCredit("01.01.2017",100);
+creditLine1.useCredit("21.02.2017",100);
+creditLine1.makePayment("10.01.2017",50);
+creditLine1.makePayment("25.02.2017",50);
+creditLine1.getPaymentAmount(2);
+
+
