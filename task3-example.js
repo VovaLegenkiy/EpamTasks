@@ -104,7 +104,7 @@ class Convoy {
     
     let memberMinSpeed = 0;
     if (this.members.length>0) {
-      let memberMinSpeed = this.members[0].speed;
+      memberMinSpeed = this.members[0].speed;
       this.members.forEach(function(member){
         if (memberMinSpeed>member.speed) {
            memberMinSpeed = member.speed;
