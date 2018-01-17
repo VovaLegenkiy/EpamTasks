@@ -132,7 +132,7 @@ class CreditLine extends Credit {
     }
 
     getPeriodPercent(start, end, dayPayment, remainder, amount) {
-        return (start - end) * remainder * dayPayment / amount;
+        return (end - start) * remainder * dayPayment / amount;
     }
 
     _getMonthPercents(month, prewData) {
@@ -141,10 +141,24 @@ class CreditLine extends Credit {
         let monthResult = {};
         monthResult.amount = 0;
         monthResult.month = month;
-        monthResult.remainder = historyData[0].amount;
+        monthResult.remainder = prewData ? prewData.creditBody : historyData[0].amount;
         monthResult.creditBody = 0;
         for (let i = 0; i < paymentData.length; i++) {
-            if (historyData[0].date.getDate() === 1) {
+            if (month === 1) {
+                if (!i) {
+                    let end = paymentData[i].date.getDate();
+                    monthResult.amount += this.getPeriodPercent(1, end, this.paymnet, monthResult.remainder, historyData[0].amount);
+                }
+                if(i === paymentData.length-1){
+                    let year = paymentData[i].date.getFullYear();
+                    let month = paymentData[i].date.getMonth();
+                    let newDate = new Date(year,month+1,0);
+                    let end = newDate.getDate();
+                    let start = paymentData[i].date.getDate();
+                    monthResult.remainder-=paymentData[i].amount;
+                    monthResult.amount += this.getPeriodPercent(start, end, this.paymnet, monthResult.remainder, historyData[0].amount);
+                }
+            }else {
 
             }
         }
@@ -156,7 +170,7 @@ class CreditLine extends Credit {
     getPaymentAmount(month) {
         let monthsResult = [];
         for (let monthNumber = 1; monthNumber <= month; monthNumber++) {
-            monthsResult.push(this._getMonthPercents(monthNumber, monthsResult[monthNumber - 1]));
+            monthsResult.push(this._getMonthPercents(monthNumber, monthsResult[monthNumber - 2]));
         }
     }
 

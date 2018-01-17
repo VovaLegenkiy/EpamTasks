@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="081f6d1f-34c3-4244-a45e-a84748e96c14" name="Default" comment="15.01.2018">
+    <list default="true" id="081f6d1f-34c3-4244-a45e-a84748e96c14" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Task3-classes.js" afterPath="$PROJECT_DIR$/Task3-classes.js" />
-      <change beforePath="$PROJECT_DIR$/task3-example.js" afterPath="$PROJECT_DIR$/task3-example.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -46,8 +45,8 @@
           <file leaf-file-name="task3-example.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/task3-example.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="642">
-                  <caret line="106" column="45" lean-forward="true" selection-start-line="106" selection-start-column="45" selection-end-line="106" selection-end-column="45" />
+                <state relative-caret-position="1802">
+                  <caret line="106" column="45" lean-forward="false" selection-start-line="106" selection-start-column="45" selection-end-line="106" selection-end-column="45" />
                   <folding />
                 </state>
               </provider>
@@ -56,8 +55,8 @@
           <file leaf-file-name="Task3-classes.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Task3-classes.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="326">
-                  <caret line="147" column="16" lean-forward="false" selection-start-line="147" selection-start-column="16" selection-end-line="147" selection-end-column="16" />
+                <state relative-caret-position="555">
+                  <caret line="161" column="16" lean-forward="true" selection-start-line="161" selection-start-column="16" selection-end-line="161" selection-end-column="16" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                   </folding>
@@ -78,8 +77,8 @@
           <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/index.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="153">
-                  <caret line="9" column="40" lean-forward="true" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+                <state relative-caret-position="187">
+                  <caret line="11" column="36" lean-forward="true" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
                   <folding />
                 </state>
               </provider>
@@ -280,7 +279,9 @@
       <workItem from="1516013503037" duration="2253000" />
       <workItem from="1516018422316" duration="4806000" />
       <workItem from="1516106289328" duration="619000" />
-      <workItem from="1516140963801" duration="9399000" />
+      <workItem from="1516140963801" duration="9440000" />
+      <workItem from="1516155115102" duration="1000" />
+      <workItem from="1516195466254" duration="1705000" />
     </task>
     <task id="LOCAL-00001" summary="11.01.2018">
       <created>1515764706406</created>
@@ -303,11 +304,18 @@
       <option name="project" value="LOCAL" />
       <updated>1516023206690</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="17.01.2018 доделать кредитную линию">
+      <created>1516152731205</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1516152731206</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59198000" />
+    <option name="totallyTimeSpent" value="60945000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -350,7 +358,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="11.01.2018" />
     <MESSAGE value="15.01.2018" />
-    <option name="LAST_COMMIT_MESSAGE" value="15.01.2018" />
+    <MESSAGE value="17.01.2018 доделать кредитную линию" />
+    <option name="LAST_COMMIT_MESSAGE" value="17.01.2018 доделать кредитную линию" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -670,18 +679,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="40" lean-forward="true" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/task3-example.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="642">
-          <caret line="106" column="45" lean-forward="true" selection-start-line="106" selection-start-column="45" selection-end-line="106" selection-end-column="45" />
+        <state relative-caret-position="1802">
+          <caret line="106" column="45" lean-forward="false" selection-start-line="106" selection-start-column="45" selection-end-line="106" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -703,10 +704,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="36" lean-forward="true" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Task3-classes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="147" column="16" lean-forward="false" selection-start-line="147" selection-start-column="16" selection-end-line="147" selection-end-column="16" />
+        <state relative-caret-position="555">
+          <caret line="161" column="16" lean-forward="true" selection-start-line="161" selection-start-column="16" selection-end-line="161" selection-end-column="16" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
